@@ -47,8 +47,9 @@ func init() {
 func atMessageEventHandler(event *dto.WSPayload, data *dto.WSATMessageData) error {
     if strings.HasSuffix(data.Content, "> hello") { // 如果@机器人并输入 hello 则回复 你好。
         api.PostMessage(ctx, data.ChannelID, &dto.MessageToCreate{MsgID: data.ID, Content: "这里没有涩图可以看"})
-    }
-	  api.PostMessage(ctx, data.ChannelID, &dto.MessageToCreate{MsgID: data.ID, Content: "这是默认回复"})
+    } else {
+        api.PostMessage(ctx, data.ChannelID, &dto.MessageToCreate{MsgID: data.ID, Content: "这是默认回复"})
+	}
     return nil
 }
 
