@@ -1,4 +1,4 @@
-package initialize
+package properties
 
 import (
 	"github.com/tencent-connect/botgo/log"

@@ -2,17 +2,16 @@ package main
 
 import (
 	"context"
-	"log"
-	"strings"
-	"time"
-	"yzk/initialize"
-
 	"github.com/tencent-connect/botgo"
 	"github.com/tencent-connect/botgo/dto"
 	"github.com/tencent-connect/botgo/event"
 	"github.com/tencent-connect/botgo/openapi"
 	"github.com/tencent-connect/botgo/token"
 	"github.com/tencent-connect/botgo/websocket"
+	"log"
+	"strings"
+	"time"
+	"yzk/initialize"
 )
 
 //Config 定义了配置文件的结构
@@ -21,13 +20,13 @@ import (
 //	Token string `yml:"token"` //机器人的token
 //}
 
-var config initialize.Props
+var config properties.Props
 var api openapi.OpenAPI
 var ctx context.Context
 
 // 获取机器人的配置信息，即机器人的appid和token
 func init() {
-	props := initialize.Init()
+	props := properties.Init()
 	log.Println(props)
 }
 
