@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/tencent-connect/botgo/log"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -59,7 +58,7 @@ type ymlHandler struct {
 
 func (handler ymlHandler) handle() {
 	fileName := "config.yml"
-	content, err := ioutil.ReadFile(fileName)
+	content, err := os.ReadFile(fileName)
 	if err != nil {
 		log.Debug("读取配置文件出错, " + err.Error())
 		return
