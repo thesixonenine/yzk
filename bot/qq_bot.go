@@ -11,7 +11,6 @@ import (
 	"github.com/tencent-connect/botgo/token"
 	"github.com/tencent-connect/botgo/websocket"
 	"log"
-	"strings"
 	"time"
 	config "yzk/initialize"
 )
@@ -25,18 +24,23 @@ func init() {
 }
 
 func atMessageEventHandler(event *dto.WSPayload, data *dto.WSATMessageData) error {
+	userId := data.Author.ID
 	content := message.ETLInput(data.Content)
-	botLog.Debugf("接收到@消息[%s]", content)
-	if strings.EqualFold(content, "hello") {
-		_, err := api.PostMessage(ctx, data.ChannelID, &dto.MessageToCreate{MsgID: data.ID, Content: "这里没有涩图可以看"})
-		if err != nil {
-			return nil
-		}
-	} else {
-		_, err := api.PostMessage(ctx, data.ChannelID, &dto.MessageToCreate{MsgID: data.ID, Content: "这是默认回复"})
-		if err != nil {
-			return nil
-		}
+	botLog.Debugf("接收到用户[%s]的@消息[%s]", userId, content)
+	command, err := FindCommand(content)
+	if err != nil {
+		botLog.Warn(err.Error())
+		return nil
+	}
+	content, err = command.Execute()
+	if err != nil {
+		botLog.Warn(err.Error())
+		return nil
+	}
+	_, err = api.PostMessage(ctx, data.ChannelID, &dto.MessageToCreate{MsgID: data.ID, Content: content})
+	if err != nil {
+		botLog.Warn(err.Error())
+		return nil
 	}
 	return nil
 }
