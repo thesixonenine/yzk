@@ -1,9 +1,10 @@
 package main
 
 import (
-	"yzk/bot"
+	"yzk/mys"
 )
 
 func main() {
-	bot.QQBotStart()
+	//bot.QQBotStart()
+	mys.GoodsPage("", 1, 200)
 }
